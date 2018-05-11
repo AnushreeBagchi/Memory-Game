@@ -36,3 +36,26 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+var count=0; var cn=[], a, matched_class;
+ $(".card").on("click",function(){
+    $(this).addClass("open show")   //  add class="open show" when a grid is clicked
+    a=$(this).find("i").attr('class');  
+    cn.push(a);
+    console.log(cn);
+    count++;    
+    if (count===2)
+    {        
+        if(cn[0]===cn[1])
+        {
+            $(".open").addClass("match");  //adding class="match" to  matched grid
+        }
+        else{
+            $(".card").removeClass("open show"); // remove class when not matched 
+        }
+        count=0; //reset counter
+        cn=[] // reset  array
+    }
+    
+ });
+
+ 
