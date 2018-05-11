@@ -36,26 +36,62 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-var count=0; var cn=[], a, matched_class;
+var count=0, moveCount=0, a, list=[] , matchedGrid=[] ; 
+
+var moves= function() {
+                  moveCount++;
+                  console.log("moves="+moveCount);
+                } ;
+
+var displayCard=function(el){
+                     $(el).addClass("open show") 
+                };
+
+var openCardList = function(el){
+                     a=$(el).find("i").attr('class');  
+                     list.push(a);
+                     console.log(list);
+                     return list;    
+                };
+
+var matchedCard= function (el){                   
+                    $(".open").addClass("match");  //adding class="match" to  matched grid
+                    matchedGrid.push($(el).find("i").attr('class'));
+                    console.log("matched cards"+matchedGrid);
+                    if(matchedGrid.length===8)
+                    {
+                        gameComplete();
+                    }
+                };
+
+var unmatchedCards= function(){
+                     $(".card").removeClass("open show"); // remove class when not matched 
+                };
+
+var gameComplete= function(){
+                    console.log("Congrats");
+}                
  $(".card").on("click",function(){
-    $(this).addClass("open show")   //  add class="open show" when a grid is clicked
-    a=$(this).find("i").attr('class');  
-    cn.push(a);
-    console.log(cn);
-    count++;    
-    if (count===2)
-    {        
-        if(cn[0]===cn[1])
+    displayCard(this);    
+    list=openCardList(this);
+
+    if (list.length===2)
+    {
+        if(list[0]===list[1])
         {
-            $(".open").addClass("match");  //adding class="match" to  matched grid
+            matchedCard(this);
         }
         else{
-            $(".card").removeClass("open show"); // remove class when not matched 
+            unmatchedCards();
         }
-        count=0; //reset counter
-        cn=[] // reset  array
+        list=[] ; // reset array
+        moves(); // increment moves counter    
     }
     
  });
 
- 
+ // code to restart the game
+ $(".restart").on("click",function(){
+    $(".card"). removeClass("open show match");
+ });
+
