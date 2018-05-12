@@ -39,8 +39,8 @@ function shuffle(array) {
 var count=0, moveCount=0, a, list=[] , matchedGrid=[] ; 
 
 var moves= function() {
-                  moveCount++;
-                  console.log("moves="+moveCount);
+                  moveCount++;            
+                  $(".moves").text(moveCount);
                 } ;
 
 var displayCard=function(el){
@@ -56,6 +56,7 @@ var openCardList = function(el){
 
 var matchedCard= function (el){                   
                     $(".open").addClass("match");  //adding class="match" to  matched grid
+                    $(".match"). removeClass("open show");
                     matchedGrid.push($(el).find("i").attr('class'));
                     console.log("matched cards"+matchedGrid);
                     if(matchedGrid.length===8)
@@ -65,16 +66,23 @@ var matchedCard= function (el){
                 };
 
 var unmatchedCards= function(){
-                     $(".card").removeClass("open show"); // remove class when not matched 
+                    
+                     $(".card").removeClass("open show  red"); // remove class when not matched 
                 };
 
 var gameComplete= function(){
                     console.log("Congrats");
-}                
- $(".card").on("click",function(){
-    displayCard(this);    
-    list=openCardList(this);
+}        
 
+var redGrid=function(){
+    $(".show").addClass("red");
+    setTimeout(unmatchedCards, 1000);
+};
+
+ $(".card").on("click",function(){
+    $(this).addClass("open show");
+    list=openCardList(this);
+        
     if (list.length===2)
     {
         if(list[0]===list[1])
@@ -82,10 +90,12 @@ var gameComplete= function(){
             matchedCard(this);
         }
         else{
-            unmatchedCards();
+            redGrid();  //Incase   of wrong match
+            
         }
         list=[] ; // reset array
-        moves(); // increment moves counter    
+        moves(); // increment moves counter 
+           
     }
     
  });

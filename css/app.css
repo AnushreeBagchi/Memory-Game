@@ -66,11 +66,15 @@ h1 {
 }
 
 .deck .card.open {
-    transform: rotateY(0);
+    
+    transform: rotateY(10deg);
     background: #02b3e4;
     cursor: default;
 }
 
+.deck .card.open.red{
+    background-color: #ff5722;
+}
 .deck .card.show {
     font-size: 33px;
 }
