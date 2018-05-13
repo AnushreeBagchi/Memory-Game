@@ -24,8 +24,6 @@ function shuffle(array) {
 
     return array;
 }
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -36,11 +34,12 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-var count=0, moveCount=0, a, list=[] , matchedGrid=[] ; 
+var count=0, moveCount=0, a, list=[] , matchedGrid=[] , starCount; 
 
 var moves= function() {
                   moveCount++;            
                   $(".moves").text(moveCount);
+                  return moveCount;
                 } ;
 
 var displayCard=function(el){
@@ -50,7 +49,7 @@ var displayCard=function(el){
 var openCardList = function(el){
                      a=$(el).find("i").attr('class');  
                      list.push(a);
-                     console.log(list);
+                    // console.log(list);
                      return list;    
                 };
 
@@ -58,7 +57,7 @@ var matchedCard= function (el){
                     $(".open").addClass("match");  //adding class="match" to  matched grid
                     $(".match"). removeClass("open show");
                     matchedGrid.push($(el).find("i").attr('class'));
-                    console.log("matched cards"+matchedGrid);
+                   // console.log("matched cards"+matchedGrid);
                     if(matchedGrid.length===8)
                     {
                         gameComplete();
@@ -71,12 +70,63 @@ var unmatchedCards= function(){
                 };
 
 var gameComplete= function(){
-                    console.log("Congrats");
-}        
+                    displaypage();
+
+}    
+
+var displaypage=function(){
+                    $(".container").toggleClass("hide");
+                    $(".winPage").toggleClass("hide");
+}
 
 var redGrid=function(){
     $(".show").addClass("red");
-    setTimeout(unmatchedCards, 1000);
+    setTimeout(unmatchedCards, 500);
+};
+
+var restart=  function (){
+    moveCount =0;
+    starCount=3;
+    $(".moves").text(moveCount);
+    $(".card"). removeClass("open show match");
+    star(moveCount);
+
+};
+
+var star= function (moveCount){
+    
+     if (moveCount>8 && moveCount<14)
+     {
+        $( "ul.stars li:nth-child(3) i").removeClass("fa fa-star");
+        $( "ul.stars li:nth-child(3) i").addClass("fa fa-star-o");
+        starCount=2;    
+        console.log(starCount);
+
+     }
+     else if (moveCount>=14 && moveCount< 20)
+     {
+        $( "ul.stars li:nth-child(2) i").removeClass("fa fa-star");
+        $( "ul.stars li:nth-child(2) i").addClass("fa fa-star-o");
+        starCount=1;
+        console.log(starCount);
+     }
+     else if (moveCount>=20)
+     {
+        $( "ul.stars li:nth-child(1) i").removeClass("fa fa-star");
+        $( "ul.stars li:nth-child(1) i").addClass("fa fa-star-o");
+        starCount=0;
+        console.log(starCount);
+     }
+     else{
+         starCount=3;
+         console.log(starCount);
+         $("ul.stars li i").removeClass("fa fa-star-o");
+         $("ul.stars li i").addClass("fa fa-star");
+         
+     }
+     $(".starsCount").text(starCount);
+
+     
 };
 
  $(".card").on("click",function(){
@@ -90,18 +140,20 @@ var redGrid=function(){
             matchedCard(this);
         }
         else{
-            redGrid();  //Incase   of wrong match
-            
+            redGrid();  //Incase   of wrong match            
         }
         list=[] ; // reset array
-        moves(); // increment moves counter 
-           
+        moveCount=moves(); // increment moves counter 
+        star(moveCount); 
     }
-    
  });
 
  // code to restart the game
  $(".restart").on("click",function(){
-    $(".card"). removeClass("open show match");
+   restart();   
  });
 
+$(".playAgain").on ("click",function(){
+    restart();
+    displaypage();
+});

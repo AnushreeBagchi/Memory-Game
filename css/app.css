@@ -112,3 +112,34 @@ h1 {
     cursor: pointer;
 }
 
+.playAgain{
+    align-items: center;
+    cursor: pointer;
+    width: 9em;
+    height: 2.5em;
+    background-color: #02ccba;
+    color: white;
+    border-radius: 6px;
+    margin: 1em;
+}
+
+.winPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:1em;
+    margin:10em;
+}
+
+.fa-check-circle-o{
+    color: #02ccba;
+    background-color: #ffffff;
+    font-size: 3em;
+    font-weight: lighter;
+}
+
+.hide{
+    display: none;
+}
+
