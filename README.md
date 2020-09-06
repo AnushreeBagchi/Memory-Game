@@ -15,6 +15,6 @@ A single-page web app that allows users to play Classic Memory Game!!
 Give it a try at [https://anushreebagchi.github.io/Memory-Game/](https://anushreebagchi.github.io/Memory-Game/)
 
 
-![alt text](https://media.giphy.com/media/MRq5gIsMmuYnBHCMwn/giphy.gif "Image of the project")
+![alt text](https://media.giphy.com/media/kgPEuoiEdduQsLuzms/giphy.gif "Image of the project")
 
 Installation: Clone or download this repo and simply open the index.html file and enjoy!
